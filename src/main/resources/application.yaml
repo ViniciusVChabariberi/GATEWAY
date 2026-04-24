@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      httpclient:
+        connect-timeout: 5000
+        response-timeout: 10s
+
+      routes:
+        - id: login-api
+          uri: lb://login-service
+          predicates:
+            - Path=/api/login/**
+
+        - id: cliente-api
+          uri: lb://cliente-service
+          predicates:
+            - Path=/api/clientes/**
+
+        - id: produto-vendas-api
+          uri: lb://produto-service
+          predicates:
+            - Path=/api/produtos/**, /api/vendas/**
+
+    discovery:
+      client:
+        simple:
+          instances:
+            login-service:
+              - uri: ${LOGIN_URL:http://localhost:8081}
+            cliente-service:
+              - uri: ${CLIENTE_URL:http://localhost:8082}
+            produto-service:
+              - uri: ${PRODUTO_URL:http://localhost:8083}

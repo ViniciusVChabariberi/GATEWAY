@@ -14,7 +14,7 @@ Este é o ponto de entrada único (Entry Point) do ecossistema. Ele gerencia o r
 - **CORS:** Configuração centralizada de acesso.
 
 ## 📌 Configuração de Rotas (application.yaml)
-- `/api/login/**` e `/api/usuarios/**` -> Login Service (8081)
-- `/api/clientes/**` -> Cliente Service (8082)
-- `/api/produtos/**` -> Produto Service (8083)
-- `/api/pedidos/**` -> Pedido/Venda Service (8083)
+- `/api/login/**` e `/api/usuario/**` -> Login Service (8081)
+- `/api/cliente/**` -> Cliente Service (8082)
+- `/api/produto/**` -> Produto Service (8083)
+- `/api/pedido/**` -> Pedido/Venda Service (8083)

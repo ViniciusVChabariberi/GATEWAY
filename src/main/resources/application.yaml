@@ -14,17 +14,17 @@ spring:
         - id: login-api
           uri: lb://login-service
           predicates:
-            - Path=/api/login/**
+            - Path=/api/login/**, /api/usuarios/**
 
         - id: cliente-api
           uri: lb://cliente-service
           predicates:
             - Path=/api/clientes/**
 
-        - id: produto-vendas-api
+        - id: produto-pedidos-api
           uri: lb://produto-service
           predicates:
-            - Path=/api/produtos/**, /api/vendas/**
+            - Path=/api/produtos/**, /api/pedidos/**
 
     discovery:
       client:

@@ -17,7 +17,7 @@ public class RouteConfig {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/login/**", "/api/usuarios/**", "/auth/**")
+                        .pathMatchers("/api/login/**", "/api/usuario/**", "/auth/**")
                         .permitAll()
                         .anyExchange().authenticated()
                 ).oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))

@@ -2,6 +2,17 @@ server:
   port: 8080
 
 spring:
+  cors:
+    url:
+      - "http://localhost:8081"
+      - "http://localhost:8082"
+      - "http://localhost:8084"
+      - "http://localhost:19006"
+      - "http://localhost:3000"
+      - "http://localhost:5173"
+      - "http://127.0.0.1:8081"
+      - "http://127.0.0.1:8084"
+      - "http://127.0.0.1:5500"
   application:
     name: api-gateway
   cloud:
@@ -14,7 +25,7 @@ spring:
         - id: login-api
           uri: lb://login-service
           predicates:
-            - Path=/api/login/**, /api/usuario/**
+            - Path=/api/login, /api/login/**, /api/usuario, /api/usuario/**
 
         - id: cliente-api
           uri: lb://cliente-service

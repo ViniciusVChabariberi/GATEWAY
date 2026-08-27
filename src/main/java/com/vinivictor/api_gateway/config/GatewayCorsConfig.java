@@ -18,16 +18,26 @@ public class GatewayCorsConfig {
     }
 
     @Bean
-    public CorsWebFilter corsWebFilter() {
+    public UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cors = new CorsConfiguration();
-        cors.setAllowedOrigins(properties.getUrl());
-        cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH"));
+        cors.addAllowedOriginPattern("http://localhost:*");
+        cors.addAllowedOriginPattern("http://127.0.0.1:*");
+        cors.addAllowedOriginPattern("http://192.168.*.*");
+        if (properties.getUrl() != null) {
+            properties.getUrl().forEach(cors::addAllowedOriginPattern);
+        }
+        cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         cors.setAllowedHeaders(List.of("*"));
         cors.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", cors);
-        return new CorsWebFilter(source);
+        return source;
+    }
+
+    @Bean
+    public CorsWebFilter corsWebFilter(UrlBasedCorsConfigurationSource corsConfigurationSource) {
+        return new CorsWebFilter(corsConfigurationSource);
     }
 
 }

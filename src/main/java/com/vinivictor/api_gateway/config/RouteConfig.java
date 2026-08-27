@@ -16,8 +16,9 @@ public class RouteConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .cors(Customizer.withDefaults())
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/login/**", "/api/usuario/**", "/auth/**")
+                        .pathMatchers("/api/login", "/api/login/**", "/api/usuario", "/api/usuario/**", "/auth", "/auth/**")
                         .permitAll()
                         .anyExchange().authenticated()
                 ).oauth2ResourceServer(oauth -> oauth.jwt(Customizer.withDefaults()))

@@ -13,6 +13,17 @@ spring:
           httpclient:
             connect-timeout: 5000
             response-timeout: 10s
+          default-filters:
+            - name: Retry
+              args:
+                retries: 3
+                methods: GET
+                statuses: BAD_GATEWAY, GATEWAY_TIMEOUT
+                backoff:
+                  firstBackoff: 500ms
+                  maxBackoff: 4s
+                  factor: 2
+                  basedOnPreviousValue: false
           routes:
             - id: loginApi
               uri: lb://login-service

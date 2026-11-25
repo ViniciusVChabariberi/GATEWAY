@@ -17,15 +17,16 @@ public class CookieBearerTokenConverter implements ServerAuthenticationConverter
     @Value("${COOKIE_NOME:tokenAgendaFlow}")
     private String cookieNome;
 
+    // O token vem do cookie HttpOnly ou do header Bearer.
+    // O cookie protege contra XSS, porque o JavaScript não consegue ler.
+    // O Bearer existe para o app mobile.
     @Override
     public Mono<Authentication> convert(ServerWebExchange exchange) {
-        // Primeiro procura no header
         String authHeader = exchange.getRequest().getHeaders().getFirst("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             return Mono.just(new BearerTokenAuthenticationToken(authHeader.substring(7)));
         }
 
-        // Se nao tem, procura no cookie
         List<HttpCookie> cookies = exchange.getRequest().getCookies().get(cookieNome);
         if (cookies != null && !cookies.isEmpty()) {
             String token = cookies.get(0).getValue();

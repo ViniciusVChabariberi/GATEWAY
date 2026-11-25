@@ -17,14 +17,14 @@ import reactor.core.publisher.Flux;
 public class SecurityConfig {
 
     private static final String ADMIN = "ROLE_ADMIN";
-
+    //Aqui estão as regras: login, registro e logout são públicos, e relatório, calendário e escrita em serviços exigem ADMIN.
+    // A regra de papel fica em um lugar só.
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(
             ServerHttpSecurity http,
             CookieBearerTokenConverter tokenConverter,
             ReactiveJwtAuthenticationConverter jwtAuthenticationConverter) {
         return http
-                // Justificativa: cookie SameSite=Lax, corpo JSON e CORS com origens listadas.
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeExchange(auth -> auth
@@ -44,7 +44,6 @@ public class SecurityConfig {
                 .build();
     }
 
-    /** Le a claim "roles" (ex.: ["ROLE_ADMIN"]) sem acrescentar prefixo. */
     @Bean
     public ReactiveJwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter conversor = new JwtGrantedAuthoritiesConverter();

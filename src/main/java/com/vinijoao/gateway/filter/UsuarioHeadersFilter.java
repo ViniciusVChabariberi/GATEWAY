@@ -12,10 +12,10 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class UsuarioHeadersFilter implements GlobalFilter {
-
+    // Depois de validar o JWT, o Gateway escreve X-Usuario-Id e X-Usuario-Role e repassa.
+    // Os serviços confiam nesses cabeçalhos e não precisam conhecer o JWT nem a chave.
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        // Primeiro remove headers que vieram do cliente para seguranca
         ServerWebExchange requestMutated = exchange.mutate()
                 .request(r -> r.headers(h -> {
                     h.remove("X-Usuario-Id");

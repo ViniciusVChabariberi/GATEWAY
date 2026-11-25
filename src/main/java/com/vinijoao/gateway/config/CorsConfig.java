@@ -12,7 +12,9 @@ import java.util.List;
 
 @Configuration
 public class CorsConfig {
-
+    //O navegador exige allowCredentials=true para enviar o cookie.
+    // Com isso ligado, não pode usar origem *.
+    // Por isso as origens são uma lista explícita, lida do YAML.
     @Bean
     public UrlBasedCorsConfigurationSource corsConfigurationSource(Environment environment) {
         List<String> origens = Binder.get(environment)

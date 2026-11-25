@@ -1,6 +1,5 @@
 package com.vinijoao.gateway;
 
-import com.vinijoao.gateway.security.CookieBearerTokenConverter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,9 +16,6 @@ public class SecurityConfigTest {
 
     @MockBean
     private ReactiveJwtDecoder jwtDecoder;
-
-    @MockBean
-    private CookieBearerTokenConverter cookieConverter;
 
     @Test
     void semTokenDeveDar401() {

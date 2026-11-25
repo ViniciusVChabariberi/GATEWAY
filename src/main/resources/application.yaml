@@ -26,36 +26,24 @@ spring:
                   basedOnPreviousValue: false
           routes:
             - id: loginApi
-              uri: lb://login-service
+              uri: ${LOGIN_URL:http://localhost:8090}
               predicates:
                 - Path=/api/auth/**
 
             - id: calendarioApi
-              uri: lb://calendario-service
+              uri: ${CALENDARIO_URL:http://localhost:8092}
               predicates:
                 - Path=/api/servicos/*/horarios, /api/calendario/**
 
             - id: agendamentoApi
-              uri: lb://agendamento-service
+              uri: ${AGENDAMENTO_URL:http://localhost:8091}
               predicates:
                 - Path=/api/servicos/**, /api/agendamentos/**
 
             - id: relatorioApi
-              uri: lb://relatorio-service
+              uri: ${RELATORIO_URL:http://localhost:8093}
               predicates:
                 - Path=/api/relatorio/**
-    discovery:
-      client:
-        simple:
-          instances:
-            login-service:
-              - uri: ${LOGIN_URL:http://localhost:8090}
-            agendamento-service:
-              - uri: ${AGENDAMENTO_URL:http://localhost:8091}
-            calendario-service:
-              - uri: ${CALENDARIO_URL:http://localhost:8092}
-            relatorio-service:
-              - uri: ${RELATORIO_URL:http://localhost:8093}
 
 jwt:
   secret: ${JWT_SECRET}
